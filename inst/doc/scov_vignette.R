@@ -42,7 +42,7 @@ corrplot::corrplot(sigma,method = "square")
 mtext("correlation matrix", side = 2, line = 0, cex = 1)
 
 ## ----compute sce--------------------------------------------------------------
-sce = scov::scov(covar_mats, adj_matrix, dataset, 
+sce = scov::scov(covar_mats, dataset, adj_matrix,
                  interaction_effects=list(c("X1","X2")),
                  ncores=1,parallelize=FALSE,verbose=FALSE)
 corrplot::corrplot(sce$corrmat_estim,method = "square")
@@ -52,7 +52,7 @@ mtext("SCE", side = 2, line = 0, cex = 1)
 dataset = mvtnorm::rmvt(num_observations,sigma=sigma,df=2) + matrix(runif(4*num_observations,max=10001,min=10000),nrow=num_observations,ncol=4)
 
 ## ----compute ive--------------------------------------------------------------
-ive = scov::scov(covar_mats, adj_matrix, dataset, 
+ive = scov::scov(covar_mats, dataset, adj_matrix,
                  interaction_effects=list(c("X1","X2")),
                  semiparametric=TRUE,
                  ncores=1,parallelize=FALSE)
@@ -67,7 +67,7 @@ dataset = mvtnorm::rmvnorm(num_observations,mean=mean,sigma=sigma)
 
 ## ----compute wsce-------------------------------------------------------------
 covar_mats = list(intercept=intercept,X1=X1)
-wsce = scov::scov(list(X1=X1), adj_matrix, dataset,
+wsce = scov::scov(list(X1=X1), dataset, adj_matrix,
                   misspecification = TRUE,
                   parallelize = FALSE,
                   ncores=1,verbose=FALSE)
